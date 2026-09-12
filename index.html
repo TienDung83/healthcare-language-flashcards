@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f7f7">
+<title>Healthcare Japanese Flashcards</title>
+<link rel="manifest" href="manifest.json">
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans",Arial,sans-serif;background:#f4f6f8;color:#18202a}
+.wrap{max-width:720px;margin:auto;padding:18px 14px 40px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+h1{font-size:22px;margin:0}.small{font-size:13px;color:#68717c}
+.panel,.card{background:white;border-radius:20px;box-shadow:0 4px 18px rgba(0,0,0,.07);padding:18px;margin-bottom:14px}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+select,button{font:inherit;border:1px solid #d9dee5;border-radius:12px;padding:11px;background:white}
+button{cursor:pointer}.primary{background:#18202a;color:white;border-color:#18202a}
+.progress{height:8px;background:#e8ebef;border-radius:8px;overflow:hidden;margin:12px 0}.bar{height:100%;width:0;background:#18202a}
+.words{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:12px 0}
+.word{padding:10px 5px;text-align:center;border:1px solid #dfe3e8;border-radius:12px;font-weight:700;font-size:14px}
+.word.active{border:2px solid #18202a;background:#f3f5f7}
+.question{font-size:17px;line-height:1.55;margin:14px 0}
+.blank{display:inline-block;min-width:90px;border-bottom:2px solid #18202a;text-align:center}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.option{padding:13px 8px}.correct{border-color:#222!important;background:#edf7ed}.wrong{border-color:#222!important;background:#faf0f0}
+.detail{display:none}.detail.show{display:block}
+.hero{font-size:52px;text-align:center;padding:4px}
+.jp{font-size:30px;font-weight:800;text-align:center}.reading{text-align:center;color:#69727d;margin-top:3px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.label{font-size:12px;color:#707985;text-transform:uppercase;letter-spacing:.05em}.value{font-size:16px;font-weight:650;margin-top:3px}
+.collocations{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{border:1px solid #dfe3e8;border-radius:999px;padding:7px 10px;font-size:14px;background:#fafbfc}
+.example{margin-top:15px;padding:13px;border-radius:14px;background:#f7f8fa;line-height:1.6}
+.next{width:100%;margin-top:14px}.score{text-align:right;font-size:13px;color:#69727d}
+@media(max-width:480px){.words{gap:4px}.word{font-size:12px;padding:9px 2px}.grid{grid-template-columns:1fr}.jp{font-size:27px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div><h1>🇯🇵 Healthcare Japanese</h1><div class="small">5 từ / 1 round · học bằng ngữ cảnh</div></div><div class="score" id="score">0 điểm</div></header>
+
+<div class="panel">
+  <div class="controls">
+    <select id="category">
+      <option value="all">Tất cả chủ đề</option>
+      <option value="daily">Cuộc sống hằng ngày</option>
+      <option value="work">Công việc</option>
+      <option value="medical">Medical Device</option>
+    </select>
+    <select id="mode">
+      <option value="sentence">Điền từ vào câu</option>
+      <option value="meaning">Đoán nghĩa</option>
+      <option value="collocation">Chọn từ ghép đúng</option>
+    </select>
+  </div>
+</div>
+
+<div class="card">
+  <div class="small" id="roundInfo">ROUND 1 · Chọn đáp án đúng</div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="words" id="words"></div>
+  <div class="question" id="question"></div>
+  <div class="options" id="options"></div>
+  <div class="detail" id="detail"></div>
+  <button class="primary next" id="next" onclick="newRound()">次へ / Câu tiếp theo</button>
+</div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

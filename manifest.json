@@ -1,0 +1,9 @@
+{
+  "name":"Healthcare Japanese Flashcards",
+  "short_name":"Healthcare JP",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#f4f6f8",
+  "theme_color":"#18202a",
+  "icons":[]
+}
