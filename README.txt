@@ -1,24 +1,18 @@
-HEALTHCARE JAPANESE FLASHCARDS – TEMPLATE V3
+Healthcare & Engineering Japanese Flashcards – V5
 
-Mục tiêu:
-- Mặt trước: 5 từ tiếng Nhật được chọn ngẫu nhiên.
-- Mỗi round có 1 từ mục tiêu + 4 từ gây nhiễu.
-- Câu ví dụ ưu tiên cách dùng tự nhiên trong đời sống và công việc.
-- Mặt sau:
-  1. 日本語
-  2. 読み方
-  3. English meaning
-  4. Nghĩa tiếng Việt
-  5. よく使う組み合わせ (cụm từ thực sự hay đi cùng)
-  6. Câu ví dụ
-  7. Hình minh họa dạng biểu tượng
+Nội dung:
+- 199 thuật ngữ unique lấy từ 6 sheet thuật ngữ trong Industry-specific Terms.xlsx.
+- Thêm bộ từ chuyên môn do ChatGPT tuyển chọn cho công việc của bạn: medical device design, mechanical design, FEM/ANSYS, motor/engine và automotive.
+- Tổng khoảng 330+ từ mẫu, chưa tính từ tự thêm trong Library.
+- 5 từ / round, random; 3 chế độ: điền từ, đoán nghĩa, chọn collocation.
+- Có English + Vietnamese + reading + 2 ví dụ + collocations.
 
-3 chế độ:
-- Điền từ vào câu
-- Đoán nghĩa
-- Chọn từ ghép đúng
+Cài GitHub Pages:
+1. Giải nén ZIP.
+2. Copy/replace index.html, app.js, manifest.json, README.txt vào repository hiện tại.
+3. Commit/push lên GitHub.
 
-Cài đặt:
-1. Upload toàn bộ 3 file index.html, app.js, manifest.json lên GitHub Pages.
-2. Mở website bằng Safari trên iPhone.
-3. Chọn Share → Add to Home Screen.
+Lưu ý:
+- Từ tự thêm bằng Library vẫn lưu trong localStorage của trình duyệt/thiết bị.
+- Các thuật ngữ từ Excel được giữ theo sheet để bạn học theo chủ đề.
+- Một số ví dụ/collocation của các thuật ngữ Excel được tạo theo mẫu học tập; khi gặp thuật ngữ quan trọng trong công việc thực tế, nên ưu tiên cách dùng trong tài liệu/công ty.

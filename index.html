@@ -7,14 +7,19 @@
 <title>Healthcare Japanese Flashcards</title>
 <link rel="manifest" href="manifest.json">
 <style>
-*{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans",Arial,sans-serif;background:#f4f6f8;color:#18202a}
-.wrap{max-width:720px;margin:auto;padding:18px 14px 40px}
-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans",Arial,sans-serif;background:#f4f6f8;color:#18202a}
+.wrap{max-width:760px;margin:auto;padding:18px 14px 40px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:10px}
 h1{font-size:22px;margin:0}.small{font-size:13px;color:#68717c}
 .panel,.card{background:white;border-radius:20px;box-shadow:0 4px 18px rgba(0,0,0,.07);padding:18px;margin-bottom:14px}
 .controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-select,button{font:inherit;border:1px solid #d9dee5;border-radius:12px;padding:11px;background:white}
-button{cursor:pointer}.primary{background:#18202a;color:white;border-color:#18202a}
+select,input,textarea{font:inherit;border:1px solid #d9dee5;border-radius:12px;padding:11px;background:white;width:100%}
+textarea{min-height:76px;resize:vertical}
+button{font:inherit;border:1px solid #d9dee5;border-radius:12px;padding:11px;background:white;cursor:pointer}
+button:active{transform:scale(.99)}
+.primary{background:#18202a;color:white;border-color:#18202a}
+.secondary{background:#f7f8fa}
 .progress{height:8px;background:#e8ebef;border-radius:8px;overflow:hidden;margin:12px 0}.bar{height:100%;width:0;background:#18202a}
 .words{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:12px 0}
 .word{padding:10px 5px;text-align:center;border:1px solid #dfe3e8;border-radius:12px;font-weight:700;font-size:14px}
@@ -28,16 +33,39 @@ button{cursor:pointer}.primary{background:#18202a;color:white;border-color:#1820
 .jp{font-size:30px;font-weight:800;text-align:center}.reading{text-align:center;color:#69727d;margin-top:3px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .label{font-size:12px;color:#707985;text-transform:uppercase;letter-spacing:.05em}.value{font-size:16px;font-weight:650;margin-top:3px}
-.collocations{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.chip{border:1px solid #dfe3e8;border-radius:999px;padding:7px 10px;font-size:14px;background:#fafbfc}
-.example{margin-top:15px;padding:13px;border-radius:14px;background:#f7f8fa;line-height:1.6}
+.example{margin-top:15px;padding:13px;border-radius:14px;background:#f7f8fa;line-height:1.7}
+.example-title{font-weight:800;margin-bottom:6px}
+.example-en{color:#4e5966;margin-top:2px}
+ruby rt{font-size:.55em;color:#69727d}
+.collocations{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.chip{border:1px solid #dfe3e8;border-radius:13px;padding:9px 10px;background:#fafbfc}
+.chip .cjp{font-weight:700}.chip .cr{font-size:12px;color:#69727d;margin-left:6px}.chip .cv{font-size:13px;color:#59636f;margin-top:3px}
 .next{width:100%;margin-top:14px}.score{text-align:right;font-size:13px;color:#69727d}
-@media(max-width:480px){.words{gap:4px}.word{font-size:12px;padding:9px 2px}.grid{grid-template-columns:1fr}.jp{font-size:27px}}
+.library-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.library-list{display:grid;gap:8px;margin-top:12px}
+.lib-item{border:1px solid #e0e4e9;border-radius:14px;padding:11px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.lib-main{min-width:0}.lib-jp{font-weight:800;font-size:18px}.lib-meta{font-size:12px;color:#69727d;margin-top:2px}
+.form{display:none;margin-top:14px;border-top:1px solid #e7eaee;padding-top:14px}
+.form.show{display:block}
+.form-grid{display:grid;gap:10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form label{font-size:12px;color:#59636f;font-weight:700;display:block;margin-bottom:5px}
+.hint{font-size:12px;color:#737d88;line-height:1.5;margin-top:5px}
+.form-actions{display:flex;gap:8px;margin-top:10px}
+.danger{color:#8a2222;background:#fff7f7}
+.empty{font-size:13px;color:#737d88;padding:8px 0}
+@media(max-width:480px){
+ .words{gap:4px}.word{font-size:12px;padding:9px 2px}.grid,.two{grid-template-columns:1fr}
+ .jp{font-size:27px}.library-head{align-items:flex-start}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header><div><h1>🇯🇵 Healthcare Japanese</h1><div class="small">5 từ / 1 round · học bằng ngữ cảnh</div></div><div class="score" id="score">0 điểm</div></header>
+<header>
+  <div><h1>🇯🇵 Healthcare & Engineering Japanese</h1><div class="small">5 từ / 1 round · học bằng ngữ cảnh</div></div>
+  <div class="score" id="score">0 điểm</div>
+</header>
 
 <div class="panel">
   <div class="controls">
@@ -46,11 +74,14 @@ button{cursor:pointer}.primary{background:#18202a;color:white;border-color:#1820
       <option value="daily">Cuộc sống hằng ngày</option>
       <option value="work">Công việc</option>
       <option value="medical">Medical Device</option>
+      <option value="mechanical">Mechanical Design</option>
+      <option value="motor">Motor / Engineering</option>
+      <option value="automotive">Automotive</option>
     </select>
     <select id="mode">
       <option value="sentence">Điền từ vào câu</option>
       <option value="meaning">Đoán nghĩa</option>
-      <option value="collocation">Chọn từ ghép đúng</option>
+      <option value="collocation">Chọn cụm thường dùng</option>
     </select>
   </div>
 </div>
@@ -63,6 +94,49 @@ button{cursor:pointer}.primary{background:#18202a;color:white;border-color:#1820
   <div class="options" id="options"></div>
   <div class="detail" id="detail"></div>
   <button class="primary next" id="next" onclick="newRound()">次へ / Câu tiếp theo</button>
+</div>
+
+<div class="panel">
+  <div class="library-head">
+    <div>
+      <h2 style="margin:0;font-size:19px">📚 Library</h2>
+      <div class="small">Từ mẫu + từ bạn tự thêm</div>
+    </div>
+    <button class="primary" onclick="toggleForm()">＋ Thêm từ mới</button>
+  </div>
+
+  <div class="form" id="addForm">
+    <div class="form-grid">
+      <div><label>Từ tiếng Nhật *</label><input id="fJp" placeholder="例：設計"></div>
+      <div class="two">
+        <div><label>Cách đọc *</label><input id="fReading" placeholder="せっけい"></div>
+        <div><label>Category *</label>
+          <select id="fCat"><option value="daily">Cuộc sống</option><option value="work" selected>Công việc</option><option value="medical">Medical Device</option>
+      <option value="mechanical">Mechanical Design</option>
+      <option value="motor">Motor / Engineering</option>
+      <option value="automotive">Automotive</option></select>
+        </div>
+      </div>
+      <div><label>English meaning *</label><input id="fEn" placeholder="design"></div>
+      <div><label>Tiếng Việt *</label><input id="fVn" placeholder="thiết kế"></div>
+      <div><label>Ví dụ 1 – tiếng Nhật *</label><textarea id="fEx1" placeholder="例：製品を設計します。&#10;Muốn thêm cách đọc cho chữ Hán: 製品[せいひん]を設計します。"></textarea></div>
+      <div><label>Ví dụ 1 – English *</label><textarea id="fEx1En" placeholder="We design the product."></textarea></div>
+      <div><label>Ví dụ 2 – tiếng Nhật *</label><textarea id="fEx2" placeholder="例：お客様の要求に合わせて設計します。"></textarea></div>
+      <div><label>Ví dụ 2 – English *</label><textarea id="fEx2En" placeholder="We design it according to the customer's requirements."></textarea></div>
+      <div><label>Cụm thường dùng</label><textarea id="fColl" placeholder="仕様を確認する | 仕様を満たす | 要求仕様&#10;Bạn có thể nhập mỗi cụm một dòng."></textarea></div>
+      <div><label>Icon</label><input id="fIcon" value="📘" maxlength="4"></div>
+    </div>
+    <div class="hint">
+      <b>Cách thêm cách đọc trong ví dụ:</b> viết <code>漢字[かんじ]</code>. App sẽ tự hiển thị cách đọc nhỏ phía trên chữ Hán.
+      Ví dụ: <code>図面[ずめん]を確認[かくにん]します。</code>
+    </div>
+    <div class="form-actions">
+      <button class="primary" onclick="saveWord()">保存 / Lưu từ</button>
+      <button class="secondary" onclick="toggleForm()">Hủy</button>
+    </div>
+  </div>
+
+  <div class="library-list" id="libraryList"></div>
 </div>
 </div>
 <script src="app.js"></script>
