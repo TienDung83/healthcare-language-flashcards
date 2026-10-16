@@ -63,7 +63,7 @@ ruby rt{font-size:.55em;color:#69727d}
 <body>
 <div class="wrap">
 <header>
-  <div><h1>🇯🇵 Healthcare & Engineering Japanese</h1><div class="small">5 từ / 1 round · học bằng ngữ cảnh</div></div>
+  <div><h1>🇯🇵 Healthcare & Engineering Japanese</h1><div class="small">5 từ ngẫu nhiên mỗi lượt · đọc Kanji, học nghĩa English, Hán-Việt và ví dụ đa dạng</div></div>
   <div class="score" id="score">0 điểm</div>
 </header>
 
@@ -79,8 +79,10 @@ ruby rt{font-size:.55em;color:#69727d}
       <option value="automotive">Automotive</option>
     </select>
     <select id="mode">
+      <option value="readingEnglish">Chọn cách đọc + nghĩa tiếng Anh</option>
+      <option value="english">Chọn nghĩa tiếng Anh</option>
       <option value="sentence">Điền từ vào câu</option>
-      <option value="meaning">Đoán nghĩa</option>
+      <option value="meaning">Đoán nghĩa tiếng Việt</option>
       <option value="collocation">Chọn cụm thường dùng</option>
     </select>
   </div>
@@ -93,14 +95,14 @@ ruby rt{font-size:.55em;color:#69727d}
   <div class="question" id="question"></div>
   <div class="options" id="options"></div>
   <div class="detail" id="detail"></div>
-  <button class="primary next" id="next" onclick="newRound()">次へ / Câu tiếp theo</button>
+  <button class="primary next" id="next" onclick="nextStep()">次へ / Từ tiếp theo</button>
 </div>
 
 <div class="panel">
   <div class="library-head">
     <div>
       <h2 style="margin:0;font-size:19px">📚 Library</h2>
-      <div class="small">Từ mẫu + từ bạn tự thêm</div>
+      <div class="small">Từ mẫu + từ bạn tự thêm · có nghĩa Hán-Việt</div>
     </div>
     <button class="primary" onclick="toggleForm()">＋ Thêm từ mới</button>
   </div>

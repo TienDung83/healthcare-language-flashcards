@@ -50,14 +50,77 @@ function addCuratedContent(x){
 }
 BASE_DATA = makeLearningData(BASE_DATA);
 
+// Hán-Việt is provided where the term has a useful, established Sino-Vietnamese equivalent.
+// For katakana, kana-only terms, and names without a natural Hán-Việt form, the UI explains that it is not applicable.
+const HANVIET = {
+ '設計':'thiết kế','開発':'khai phát','機械設計':'cơ giới thiết kế','医療機器':'y liệu khí cụ','医療機器設計':'y liệu khí cụ thiết kế',
+ '要求仕様':'yêu cầu đặc tả','顧客要求':'cố khách yêu cầu','設計仕様':'thiết kế đặc tả','仕様変更':'đặc tả biến canh','設計変更':'thiết kế biến canh',
+ '図面':'đồ diện','部品図':'bộ phẩm đồ','組立図':'tổ lập đồ','詳細図':'tường tế đồ','断面図':'đoạn diện đồ','投影図':'đầu ảnh đồ',
+ '寸法':'thốn pháp','寸法公差':'thốn pháp công sai','幾何公差':'kỷ hà công sai','基準':'cơ chuẩn','基準面':'cơ chuẩn diện','表面粗さ':'biểu diện thô sáp',
+ '干渉':'can thiệp','同軸度':'đồng trục độ','平面度':'bình diện độ','直角度':'trực giác độ','円筒度':'viên đồng độ','形状':'hình trạng','構造':'cấu tạo',
+ '材料特性':'tài liệu đặc tính','強度':'cường độ','剛性':'cương tính','弾性':'đàn tính','塑性':'tố tính','変形':'biến hình','応力':'ứng lực','疲労':'bì lao','破壊':'phá hoại',
+ '安全率':'an toàn suất','耐久性':'nại cửu tính','摩擦':'ma sát','摩耗':'ma hao','潤滑':'nhuận hoạt','軸':'trục','軸受':'trục thụ','歯車':'xỉ xa','気密性':'khí mật tính','液密性':'dịch mật tính',
+ '漏れ試験':'lậu thí nghiệm','流路':'lưu lộ','流速':'lưu tốc','流体':'lưu thể','密度':'mật độ','温度':'ôn độ','圧力計':'áp lực kế','吸引圧':'hấp dẫn áp','吸引力':'hấp dẫn lực',
+ '洗浄性':'tẩy tịnh tính','滅菌性':'diệt khuẩn tính','生体適合性':'sinh thể thích hợp tính','リスク分析':'rủi ro phân tích','リスク管理':'rủi ro quản lý','検証':'kiểm chứng','妥当性確認':'thỏa đáng tính xác nhận',
+ '評価':'bình giá','試験':'thí nghiệm','試作品':'thí tác phẩm','量産':'lượng sản','工程':'công trình','患者':'bệnh giả','禁忌':'cấm kỵ','再滅菌':'tái diệt khuẩn',
+ '蕁麻疹':'tầm ma chẩn','呼吸困難':'hô hấp khốn nan','血圧低下':'huyết áp đê hạ','嘔吐物':'ẩu thổ vật','外径':'ngoại kính','食道狭窄':'thực đạo hiệp trạch',
+ '患者安全':'bệnh giả an toàn','有効性':'hữu hiệu tính','安全性':'an toàn tính','品質':'phẩm chất','品質管理':'phẩm chất quản lý','性能':'tính năng','機能':'cơ năng',
+ '製品':'chế phẩm','材料':'tài liệu','材質':'tài chất','部品':'bộ phẩm','製造':'chế tạo','組立':'tổ lập','検査':'kiểm tra','確認':'xác nhận','記録':'ký lục',
+ '改善':'cải thiện','原因':'nguyên nhân','結果':'kết quả','条件':'điều kiện','試験結果':'thí nghiệm kết quả','使用':'sử dụng','使用方法':'sử dụng phương pháp',
+ '予防接種':'dự phòng tiếp chủng','副反応':'phó phản ứng','発熱':'phát nhiệt','頭痛':'đầu thống','倦怠感':'quyện đãi cảm','発疹':'phát chẩn','免疫':'miễn dịch','免疫不全':'miễn dịch bất toàn',
+ '心臓病':'tâm tạng bệnh','腎臓病':'thận tạng bệnh','肝臓病':'can tạng bệnh','血液疾患':'huyết dịch tật hoạn','妊娠':'nhâm thần','出生体重':'xuất sinh thể trọng','健康状態':'kiện khang trạng thái'
+};
+function hanVietFor(x){
+  if(HANVIET[x.jp]) return HANVIET[x.jp];
+  // Exact word only: avoid inventing a Hán-Việt translation for every arbitrary compound.
+  return /[一-龯々]/.test(x.jp) ? 'Chưa có nghĩa Hán-Việt thông dụng' : 'Không áp dụng';
+}
+function enrichWord(x, i){
+  x.hv = x.hv || hanVietFor(x);
+  const q=x.jp, en=x.en, cat=x.cat||'';
+  const templates = cat==='medical' || /medical|医療|内視鏡|患者|滅菌|吸引|洗浄|臨床|安全/.test(cat+' '+q) ? [
+    [`${q}を確認した後、試験記録に結果を残します。`,`After checking ${en}, we record the results in the test report.`],
+    [`使用前に${q}に問題がないか確認してください。`,`Before use, check whether there are any issues with ${en}.`],
+    [`評価会議では${q}について意見を交換しました。`,`We exchanged views on ${en} during the evaluation meeting.`],
+    [`今回の試験では${q}を重点的に評価します。`,`In this test, we will focus on evaluating ${en}.`],
+    [`手順書に${q}の確認方法を追加しました。`,`We added a method for checking ${en} to the procedure.`],
+    [`設計レビューで${q}に関するリスクを検討します。`,`We will consider risks related to ${en} during the design review.`]
+  ] : cat==='mechanical' || /図面|寸法|公差|剛性|強度|応力|形状|構造|材料|軸|歯車/.test(q) ? [
+    [`変更した${q}を3Dモデルに反映しました。`,`I reflected the updated ${en} in the 3D model.`],
+    [`組立前に${q}を図面と照合します。`,`Before assembly, we compare ${en} with the drawing.`],
+    [`設計レビューで${q}の妥当性を確認しました。`,`We checked the validity of ${en} during the design review.`],
+    [`解析結果を参考にして${q}を見直します。`,`We will review ${en} based on the analysis results.`],
+    [`製造担当者から${q}について質問がありました。`,`The manufacturing team asked a question about ${en}.`],
+    [`試作品を測定し、${q}が要求を満たすか確認します。`,`We will measure the prototype and check whether ${en} meets the requirements.`]
+  ] : cat==='motor' || /モーター|トルク|回転|振動|エンジン|出力/.test(q+' '+cat) ? [
+    [`試験装置を使って${q}を測定しました。`,`We measured ${en} using the test equipment.`],
+    [`負荷が変わると${q}も変化します。`,`When the load changes, ${en} also changes.`],
+    [`シミュレーション結果と実測値を比較します。`,`We compare the simulation results with the measured values for ${en}.`],
+    [`異音の原因を調べるため、${q}を詳しく確認しました。`,`We examined ${en} in detail to investigate the unusual noise.`],
+    [`今回の評価では${q}の安定性を重視します。`,`This evaluation focuses on the stability of ${en}.`],
+    [`条件を変えて、${q}への影響を調べます。`,`We change the conditions and examine their effect on ${en}.`]
+  ] : [
+    [`会議で${q}について説明することになりました。`,`I will explain ${en} at the meeting.`],
+    [`資料を更新したので、${q}の内容を確認してください。`,`I updated the document, so please check the details of ${en}.`],
+    [`お客様の要望に合わせて${q}を見直します。`,`We will review ${en} to meet the customer's request.`],
+    [`次の打ち合わせまでに${q}を整理しておきます。`,`I will organize the information about ${en} before the next meeting.`],
+    [`関係者と相談しながら、${q}の進め方を決めます。`,`We will decide how to proceed with ${en} in consultation with the relevant people.`],
+    [`変更点を共有し、${q}について合意を取りました。`,`We shared the changes and reached an agreement on ${en}.`]
+  ];
+  const a=(i*3+1)%templates.length, b=(a+1+(i%5))%templates.length;
+  x.examples=[{jp:templates[a][0],en:templates[a][1]},{jp:templates[b][0],en:templates[b][1]}];
+  return x;
+}
+BASE_DATA = BASE_DATA.map(enrichWord);
+
 const CUSTOM_KEY = "healthcareJapaneseCustomWordsV4";
 let DATA = loadData();
-let round=[], target=null, score=0, roundNo=0, answered=false;
+let round=[], target=null, score=0, roundNo=0, answered=false, targetIndex=0, quizStage=0;
 
 function loadData(){
   try{
     const custom=JSON.parse(localStorage.getItem(CUSTOM_KEY)||"[]");
-    return [...BASE_DATA,...custom];
+    return [...BASE_DATA,...custom.map((x,i)=>{ if(!x.hv)x.hv=hanVietFor(x); if(!x.examples||x.examples.length<2)enrichWord(x,i+BASE_DATA.length); return x; })];
   }catch(e){return [...BASE_DATA]}
 }
 function saveCustomData(){
@@ -84,58 +147,92 @@ function newRound(){
  const p=pool();
  if(p.length<5){alert("このカテゴリーには5語以上必要です。");return}
  round=shuffle(p).slice(0,5);
- target=round[Math.floor(Math.random()*5)];
+ targetIndex=0; quizStage=0; target=round[targetIndex];
  answered=false; roundNo++;
  render();
 }
 function render(){
- document.getElementById("roundInfo").textContent=`ROUND ${roundNo} · 5 từ được chọn ngẫu nhiên`;
- document.getElementById("bar").style.width=((roundNo%10||10)*10)+"%";
- document.getElementById("words").innerHTML=round.map(x=>`<div class="word ${x===target?"active":""}">${escapeHTML(x.jp)}</div>`).join("");
+ target=round[targetIndex];
+ document.getElementById("roundInfo").textContent=`ROUND ${roundNo} · Từ ${targetIndex+1}/5`;
+ document.getElementById("bar").style.width=((targetIndex+(quizStage?0.5:0))/5*100)+"%";
+ document.getElementById("words").innerHTML=round.map((x,i)=>`<div class="word ${i===targetIndex?"active":""}">${escapeHTML(x.jp)}</div>`).join("");
  const mode=document.getElementById("mode").value;
- let q="";
- if(mode==="sentence"){
+ let q="", opts=[];
+ if(mode==="readingEnglish"){
+   if(quizStage===0){
+     q=`<b>${escapeHTML(target.jp)}</b><br>Chọn cách đọc đúng (読み方・よみかた):`;
+     const readings=[...new Set(DATA.map(x=>x.reading).filter(Boolean))];
+     opts=shuffle([target.reading,...shuffle(readings.filter(r=>r!==target.reading)).slice(0,3)]).map(t=>({text:t,ok:t===target.reading}));
+   }else{
+     q=`<b>${escapeHTML(target.jp)}</b>（${escapeHTML(target.reading)}）<br>Chọn nghĩa tiếng Anh đúng:`;
+     const meanings=[...new Set(DATA.map(x=>x.en).filter(Boolean))];
+     opts=shuffle([target.en,...shuffle(meanings.filter(r=>r!==target.en)).slice(0,3)]).map(t=>({text:t,ok:t===target.en}));
+   }
+ }else if(mode==="sentence"){
    const ex=target.examples[0].jp.replace(/\[[^\]]+\]/g,"");
    q=`Chọn từ đúng để hoàn thành câu:<br><b>${cleanSentenceForBlank(ex,target.jp)}</b>`;
+   opts=shuffle(round).map(x=>({text:x.jp,ok:x===target}));
+ }else if(mode==="meaning"){
+   q=`Từ <b>${escapeHTML(target.jp)}</b> có nghĩa tiếng Việt gần nhất là gì?`;
+   opts=shuffle(round).map(x=>({text:x.vn,ok:x===target}));
+ }else if(mode==="english"){
+   q=`<b>${escapeHTML(target.jp)}</b>（${escapeHTML(target.reading)}）<br>Chọn nghĩa tiếng Anh đúng:`;
+   const meanings=[...new Set(DATA.map(x=>x.en).filter(Boolean))];
+   opts=shuffle([target.en,...shuffle(meanings.filter(r=>r!==target.en)).slice(0,3)]).map(t=>({text:t,ok:t===target.en}));
+ }else{
+   q=`Cụm từ nào thường đi với <b>${escapeHTML(target.jp)}</b>?`;
+   opts=shuffle(round.flatMap(x=>x.coll.map(c=>({text:c[0],ok:x===target})))).slice(0,8);
  }
- if(mode==="meaning") q=`Từ <b>${escapeHTML(target.jp)}</b> có nghĩa gần nhất là gì?`;
- if(mode==="collocation") q=`Cụm từ nào thường đi với <b>${escapeHTML(target.jp)}</b>?`;
  document.getElementById("question").innerHTML=q;
- const opts=mode==="collocation"
-   ? shuffle(round.flatMap(x=>x.coll.map(c=>({text:c[0],ok:x===target})))).slice(0,8)
-   : shuffle(round).map(x=>({text:mode==="meaning"?x.vn:x.jp,ok:x===target}));
  document.getElementById("options").innerHTML=opts.map((o,i)=>`<button class="option" onclick="answer(${i},${o.ok})" id="op${i}">${escapeHTML(o.text)}</button>`).join("");
  window.currentOpts=opts;
  document.getElementById("detail").className="detail";
  document.getElementById("detail").innerHTML="";
+ answered=false;
+ document.getElementById("next").textContent=mode==="readingEnglish"&&quizStage===0?"次へ / Tiếp: nghĩa tiếng Anh":"次へ / Từ tiếp theo";
 }
 function answer(i,ok){
  if(answered)return; answered=true;
- const b=document.getElementById("op"+i); b.classList.add(ok?"correct":"wrong");
+ const b=document.getElementById("op"+i); if(b)b.classList.add(ok?"correct":"wrong");
  if(!ok) document.querySelectorAll(".option").forEach((el,idx)=>{if(window.currentOpts[idx].ok)el.classList.add("correct")});
  else score+=10;
  document.getElementById("score").textContent=score+" điểm";
- const d=document.getElementById("detail");
- d.className="detail show";
+ const mode=document.getElementById("mode").value;
+ const d=document.getElementById("detail"); d.className="detail show";
+ if(mode==="readingEnglish"&&quizStage===0){
+   d.innerHTML=`<div class="example"><b>${ok?"Chính xác!":"Đáp án đúng:"}</b> ${escapeHTML(target.reading)}<br><span class="small">Tiếp theo, hãy chọn nghĩa tiếng Anh của từ này.</span></div>`;
+   return;
+ }
+ showWordDetail(d, target);
+}
+function showWordDetail(d, word){
  d.innerHTML=`
- <div class="hero">${target.icon||"📘"}</div>
- <div class="jp">${escapeHTML(target.jp)}</div>
- <div class="reading">${escapeHTML(target.reading)}</div>
+ <div class="hero">${word.icon||"📘"}</div>
+ <div class="jp">${escapeHTML(word.jp)}</div>
+ <div class="reading">${escapeHTML(word.reading)}</div>
  <div class="grid">
-   <div><div class="label">English</div><div class="value">${escapeHTML(target.en)}</div></div>
-   <div><div class="label">Tiếng Việt</div><div class="value">${escapeHTML(target.vn)}</div></div>
+   <div><div class="label">English</div><div class="value">${escapeHTML(word.en)}</div></div>
+   <div><div class="label">Tiếng Việt</div><div class="value">${escapeHTML(word.vn)}</div></div>
+   <div><div class="label">Hán-Việt</div><div class="value">${escapeHTML(word.hv||hanVietFor(word))}</div></div>
+   <div><div class="label">日本語の読み方</div><div class="value">${escapeHTML(word.reading)}</div></div>
  </div>
  <div class="example"><div class="example-title">① 例文 / Ví dụ 1</div>
-   <div>${parseReading(target.examples[0].jp)}</div><div class="example-en">🇬🇧 ${escapeHTML(target.examples[0].en)}</div>
+   <div>${parseReading(word.examples[0].jp)}</div><div class="example-en">🇬🇧 ${escapeHTML(word.examples[0].en)}</div>
  </div>
  <div class="example"><div class="example-title">② 例文 / Ví dụ 2</div>
-   <div>${parseReading(target.examples[1].jp)}</div><div class="example-en">🇬🇧 ${escapeHTML(target.examples[1].en)}</div>
+   <div>${parseReading(word.examples[1].jp)}</div><div class="example-en">🇬🇧 ${escapeHTML(word.examples[1].en)}</div>
  </div>
  <div style="margin-top:14px"><div class="label">よく使う組み合わせ / Cụm thường dùng</div>
-   <div class="collocations">${target.coll.map(c=>`<div class="chip"><div class="cjp">${escapeHTML(c[0])}<span class="cr">(${escapeHTML(c[1])})</span></div><div class="cv">${escapeHTML(c[2])}</div></div>`).join("")}</div>
+   <div class="collocations">${word.coll.map(c=>`<div class="chip"><div class="cjp">${escapeHTML(c[0])}<span class="cr">${c[1]?"("+escapeHTML(c[1])+")":""}</span></div><div class="cv">${escapeHTML(c[2])}</div></div>`).join("")}</div>
  </div>`;
 }
-
+function nextStep(){
+ const mode=document.getElementById("mode").value;
+ if(mode==="readingEnglish"&&quizStage===0&&answered){quizStage=1;render();return;}
+ if(!answered)return;
+ if(targetIndex<round.length-1){targetIndex++;quizStage=0;target=round[targetIndex];render();}
+ else newRound();
+}
 function toggleForm(){
  const f=document.getElementById("addForm");
  f.classList.toggle("show");
@@ -143,7 +240,7 @@ function toggleForm(){
 }
 function val(id){return document.getElementById(id).value.trim()}
 function saveWord(){
- const jp=val("fJp"), reading=val("fReading"), en=val("fEn"), vn=val("fVn");
+ const jp=val("fJp"), reading=val("fReading"), en=val("fEn"), vn=val("fVn"), hv=val("fHv");
  const ex1=val("fEx1"), ex1En=val("fEx1En"), ex2=val("fEx2"), ex2En=val("fEx2En");
  const cat=val("fCat"), collText=val("fColl"), icon=val("fIcon")||"📘";
  if(!jp||!reading||!en||!vn||!ex1||!ex1En||!ex2||!ex2En){
@@ -154,7 +251,7 @@ function saveWord(){
    const parts=s.split("|").map(x=>x.trim());
    return [parts[0],parts[1]||"",parts[2]||""];
  });
- const word={jp,reading,en,vn,cat,icon,custom:true,examples:[{jp:ex1,en:ex1En},{jp:ex2,en:ex2En}],coll};
+ const word={jp,reading,en,vn,hv:hv||hanVietFor({jp}),cat,icon,custom:true,examples:[{jp:ex1,en:ex1En},{jp:ex2,en:ex2En}],coll};
  DATA.push(word);
  saveCustomData();
  renderLibrary();
