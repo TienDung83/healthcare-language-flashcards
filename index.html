@@ -63,7 +63,7 @@ ruby rt{font-size:.55em;color:#69727d}
 <body>
 <div class="wrap">
 <header>
-  <div><h1>🇯🇵 Healthcare & Engineering Japanese</h1><div class="small">5 từ ngẫu nhiên mỗi lượt · đọc Kanji, học nghĩa English, Hán-Việt và ví dụ đa dạng</div></div>
+  <div><h1>🇯🇵 Healthcare & Engineering Japanese</h1><div class="small">5 từ ngẫu nhiên mỗi lượt · đọc Kanji, chọn nghĩa English, học âm Hán-Việt từng chữ và ví dụ đa dạng</div></div>
   <div class="score" id="score">0 điểm</div>
 </header>
 
@@ -102,7 +102,7 @@ ruby rt{font-size:.55em;color:#69727d}
   <div class="library-head">
     <div>
       <h2 style="margin:0;font-size:19px">📚 Library</h2>
-      <div class="small">Từ mẫu + từ bạn tự thêm · có nghĩa Hán-Việt</div>
+      <div class="small">Từ mẫu + từ bạn tự thêm · có âm Hán-Việt từng chữ</div>
     </div>
     <button class="primary" onclick="toggleForm()">＋ Thêm từ mới</button>
   </div>
@@ -121,6 +121,7 @@ ruby rt{font-size:.55em;color:#69727d}
       </div>
       <div><label>English meaning *</label><input id="fEn" placeholder="design"></div>
       <div><label>Tiếng Việt *</label><input id="fVn" placeholder="thiết kế"></div>
+      <div><label>Âm âm Hán-Việt từng chữ (không phải nghĩa dịch) – có thể để trống</label><input id="fHv" placeholder="Ví dụ: 公園 → công – viên"></div>
       <div><label>Ví dụ 1 – tiếng Nhật *</label><textarea id="fEx1" placeholder="例：製品を設計します。&#10;Muốn thêm cách đọc cho chữ Hán: 製品[せいひん]を設計します。"></textarea></div>
       <div><label>Ví dụ 1 – English *</label><textarea id="fEx1En" placeholder="We design the product."></textarea></div>
       <div><label>Ví dụ 2 – tiếng Nhật *</label><textarea id="fEx2" placeholder="例：お客様の要求に合わせて設計します。"></textarea></div>
@@ -129,7 +130,7 @@ ruby rt{font-size:.55em;color:#69727d}
       <div><label>Icon</label><input id="fIcon" value="📘" maxlength="4"></div>
     </div>
     <div class="hint">
-      <b>Cách thêm cách đọc trong ví dụ:</b> viết <code>漢字[かんじ]</code>. App sẽ tự hiển thị cách đọc nhỏ phía trên chữ Hán.
+      <b>Ghi chú:</b> Âm Hán-Việt là cách đọc từng chữ Hán theo âm Hán-Việt, không phải bản dịch nghĩa của từ. Ví dụ: 公園 = công – viên; 設計 = thiết – kế.<br><b>Cách thêm cách đọc trong ví dụ:</b> viết <code>漢字[かんじ]</code>. App sẽ tự hiển thị cách đọc nhỏ phía trên chữ Hán.
       Ví dụ: <code>図面[ずめん]を確認[かくにん]します。</code>
     </div>
     <div class="form-actions">
