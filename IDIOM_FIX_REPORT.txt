@@ -1,0 +1,6 @@
+V12 idiom and related synonym-entry correction report
+BASE_DATA entries retained: 2010
+Entries corrected: 83
+Items remaining in idiom category: 58
+For all 83 entries in the prior idiom category, English and Vietnamese meanings were separated and corrected; category was corrected for ordinary vocabulary that had been misclassified as idiom. Hán-Việt display is computed by the app from its character map. Readings were normalized for the reviewed entries.
+Translations are editorial corrections based on the supplied idiom PDF and synonym PDF, not a claim that each idiom has a one-to-one literal English equivalent.
