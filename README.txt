@@ -1,12 +1,17 @@
-Japanese Flashcards V10
+Healthcare & Engineering Japanese Flashcards — V12
 
-Bản V10 tập trung vào: từ tiếng Nhật, cách đọc, nghĩa tiếng Anh, nghĩa tiếng Việt và âm Hán-Việt từng chữ Kanji.
-Đã bỏ phần ví dụ và cụm từ thường dùng khỏi giao diện và chế độ quiz.
+Files: index.html, app.js, learning.js, manifest.json.
 
-Cài đặt GitHub Pages:
-1. Giải nén ZIP.
-2. Thay index.html, app.js và manifest.json trong repository hiện tại bằng các file trong gói.
-3. Commit/push và chờ GitHub Pages cập nhật.
-4. Mở lại website trên iPhone; nếu dữ liệu cũ còn hiển thị, tải lại trang.
+V12 changes
+- Preserves V11 quiz, dictionary, custom vocabulary and email templates.
+- Adds a dedicated telephone & dialogue tab. Dialogues are English + Japanese only, as requested, with copy buttons per line or whole dialogue.
+- Scenarios: incoming calls, spelling/clarifying names, holding/transferring calls, taking messages, introducing End Shower, explaining use/benefits, technical issue handling, confirming requirements, quotations/delivery, and online meeting scheduling.
+- Adds a new vocabulary set cross-checked against V11 headwords, drawing from the uploaded PDFs on health checks, aptitude-test terms, medical devices, mechanical design, body parts, kitchen items, idioms and N2 grammar.
+- Existing quiz modes and 5-random-word rounds remain.
 
-Lưu ý: âm Hán-Việt được hiển thị theo từng chữ Kanji. Với từ viết hoàn toàn bằng kana/katakana, mục này sẽ ghi Không áp dụng.
+Deployment: replace index.html, app.js, learning.js and manifest.json in your GitHub Pages repository.
+
+Note: Japanese readings and translations for new terms were reviewed as a curated learning list. For source documents that contain large phrase lists or grammar explanations, not every full sentence/pattern is converted into a standalone flashcard.
+
+
+Revised source review: all 10 user-uploaded PDFs were text-extracted and checked. IMPORT_AUDIT.txt gives per-file extraction/import counts. Imported table rows require a Japanese headword, kana reading, English and Vietnamese meaning; terms already present in V11 are skipped. This avoids falsely claiming every line or full sentence is a vocabulary card.

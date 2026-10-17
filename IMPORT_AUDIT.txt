@@ -1,0 +1,21 @@
+V12 REVISED IMPORT AUDIT
+
+Base V11 entries: 877
+New unique entries added in this review: 1133
+Final unique headwords: 2010
+
+PDFs reviewed using extracted text (10 files):
+- Thiết kế_full.txt: 121 candidate rows detected; 94 new rows imported by table parser.
+- Thành ngữ_full.txt: 50 candidate rows detected; 48 new rows imported by table parser.
+- Lời chúc,động viên_full.txt: 177 candidate rows detected; 150 new rows imported by table parser.
+- Khám sức khoẻ_full.txt: 216 candidate rows detected; 169 new rows imported by table parser.
+- 適性検査_full.txt: 0 candidate rows detected; 0 new rows imported by table parser.
+- Tiếng Nhật chuyên ngành2_full.txt: 1 candidate rows detected; 1 new rows imported by table parser.
+- 📑 Chủ đề 1- Các bộ phận trên cơ thể – Slide 2 (21–47)_full.txt: 438 candidate rows detected; 379 new rows imported by table parser.
+- Ngữ pháp_full.txt: 347 candidate rows detected; 134 new rows imported by table parser.
+- Từ đồng nghĩa_full.txt: 86 candidate rows detected; 35 new rows imported by table parser.
+- Tiếng Nhật chuyên ngành_full.txt: 155 candidate rows detected; 77 new rows imported by table parser.
+
+Manually reviewed source-derived additions included: 46.
+Deduplication: normalized exact Japanese headword against V11 and within the imported set.
+Important limitations: OCR/PDF text extraction can split tables and layouts; only rows with a readable Japanese headword, kana reading, English meaning and Vietnamese meaning were auto-imported. Curated manual entries were added only where the source terms were visible and meanings/readings were reliable. Long sentences, test statements and example sentences were not blindly added as vocabulary cards. See README for scope.

@@ -54,12 +54,34 @@ ruby rt{font-size:.55em;color:#69727d}
  .words{gap:4px}.word{font-size:12px;padding:9px 2px}.grid,.two{grid-template-columns:1fr}
  .jp{font-size:27px}.library-head{align-items:flex-start}
 }
+
+.section-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+.section-tabs button{flex:1;min-width:100px;font-size:14px;padding:10px 8px}
+.learn-section h2{font-size:19px;margin:6px 0 8px}
+.learn-section>p{line-height:1.5}
+.dictionary-results,.phrase-list{display:grid;gap:9px;margin-top:12px}
+.dict-item,.phrase-item,.email-block{border:1px solid #e0e5ea;border-radius:14px;padding:13px;background:#fff}
+.dict-top{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.dict-jp{font-size:21px;font-weight:800}.dict-reading{font-size:13px;color:#69727d;margin-top:2px}
+.dict-meta{display:grid;gap:5px;margin-top:8px;font-size:14px;line-height:1.45}
+.dict-label{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#77818c}
+.phrase-item .phrase-en{font-size:16px;font-weight:700;line-height:1.45}
+.phrase-item .phrase-jp{margin-top:7px;font-size:14px;color:#4b5967;line-height:1.5}
+.phrase-item .phrase-vn{margin-top:6px;font-size:14px;line-height:1.5}
+.phrase-head{font-size:12px;color:#68717c;margin-bottom:6px}
+.email-content{display:grid;gap:10px;margin-top:12px}
+.email-lang{font-size:12px;color:#69727d;font-weight:700;margin-bottom:5px}
+.email-text{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55;font-size:14px;background:#fafbfc;border:1px solid #e1e6eb;border-radius:10px;padding:11px}
+.email-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.email-actions button{font-size:13px}
+@media(max-width:480px){.section-tabs button{font-size:12px}.dict-jp{font-size:19px}}
+
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <div><h1>🇯🇵 Healthcare & Engineering Japanese</h1><div class="small">5 từ ngẫu nhiên mỗi lượt · đọc Kanji, chọn nghĩa English, học âm Hán-Việt từng chữ và ví dụ đa dạng</div></div>
+  <div><h1>🇯🇵 Healthcare & Engineering Japanese</h1><div class="small">5 từ ngẫu nhiên mỗi lượt · luyện cách đọc, nghĩa và âm Hán-Việt</div></div>
   <div class="score" id="score">0 điểm</div>
 </header>
 
@@ -68,6 +90,7 @@ ruby rt{font-size:.55em;color:#69727d}
     <select id="category">
       <option value="all">Tất cả chủ đề</option>
       <option value="daily">Cuộc sống hằng ngày</option>
+      <option value="aptitude">適性検査 · Tính cách</option>
       <option value="work">Công việc</option>
       <option value="medical">Medical Device</option>
       <option value="mechanical">Mechanical Design</option>
@@ -90,6 +113,41 @@ ruby rt{font-size:.55em;color:#69727d}
   <div class="options" id="options"></div>
   <div class="detail" id="detail"></div>
   <button class="primary next" id="next" onclick="nextStep()">次へ / Từ tiếp theo</button>
+</div>
+
+
+<div class="panel learning-panel">
+  <div class="section-tabs" role="tablist">
+    <button class="primary" id="tabDictionary" onclick="showLearningTab('dictionary')">🔎 Tra từ điển</button>
+    <button id="tabPhrases" onclick="showLearningTab('phrases')">💬 Mẫu câu tiếng Anh</button>
+    <button id="tabEmails" onclick="showLearningTab('emails')">✉️ Mẫu email</button>
+    <button id="tabCalls" onclick="showLearningTab('calls')">☎️ Gọi điện & hội thoại</button>
+  </div>
+  <section id="dictionarySection" class="learn-section">
+    <h2>Tra từ Nhật – Việt – Anh</h2>
+    <p class="small">Nhập từ hoặc một phần nghĩa bằng tiếng Việt, tiếng Nhật, hiragana/katakana hoặc tiếng Anh.</p>
+    <input id="dictionaryQuery" type="search" placeholder="Ví dụ: hút, suction, 吸引, design..." autocomplete="off">
+    <div class="small" id="dictionaryCount" style="margin-top:8px"></div>
+    <div id="dictionaryResults" class="dictionary-results"></div>
+  </section>
+  <section id="phrasesSection" class="learn-section" hidden>
+    <h2>Mẫu câu tiếng Anh thường gặp</h2>
+    <p class="small">Có câu tiếng Anh, bản dịch tiếng Việt và cách diễn đạt tiếng Nhật tham khảo.</p>
+    <select id="phraseCategory"><option value="all">Tất cả chủ đề</option><option value="greetings">Chào hỏi & làm quen</option><option value="daily">Thói quen hằng ngày</option><option value="hobbies">Sở thích cá nhân</option><option value="work">Công việc & kinh nghiệm</option></select>
+    <div id="phraseResults" class="phrase-list"></div>
+  </section>
+  <section id="callsSection" class="learn-section" hidden>
+    <h2>Gọi điện & hội thoại thực tế</h2>
+    <p class="small">Chỉ hiển thị hội thoại tiếng Anh và tiếng Nhật để dễ luyện nói. Chọn tình huống, đọc từng lượt và luyện đóng vai.</p>
+    <select id="dialogueCategory"><option value="all">Tất cả tình huống</option><option value="phone">Gọi điện cơ bản</option><option value="transfer">Chuyển máy / giữ máy / nhắn lời</option><option value="medical">Giới thiệu thiết bị y tế</option><option value="technical">Trao đổi kỹ thuật</option><option value="meeting">Báo giá / hẹn họp</option></select>
+    <div id="dialogueResults" class="phrase-list"></div>
+  </section>
+  <section id="emailsSection" class="learn-section" hidden>
+    <h2>Mẫu email công việc</h2>
+    <p class="small">Chọn mẫu, thay các phần trong dấu ngoặc vuông bằng thông tin thật trước khi gửi.</p>
+    <select id="emailTemplateSelect"></select>
+    <div id="emailTemplateContent" class="email-content"></div>
+  </section>
 </div>
 
 <div class="panel">
@@ -119,8 +177,7 @@ ruby rt{font-size:.55em;color:#69727d}
       <div><label>Icon</label><input id="fIcon" value="📘" maxlength="4"></div>
     </div>
     <div class="hint">
-      <b>Ghi chú:</b> Âm Hán-Việt là cách đọc từng chữ Hán, không phải bản dịch nghĩa của từ. Ví dụ: 公園 = Công – Viên; 設計 = Thiết – Kế.<br><b>Cách thêm cách đọc trong ví dụ:</b> viết <code>漢字[かんじ]</code>. App sẽ tự hiển thị cách đọc nhỏ phía trên chữ Hán.
-      Ví dụ: <code>図面[ずめん]を確認[かくにん]します。</code>
+      <b>Ghi chú:</b> Âm Hán-Việt là cách đọc từng chữ Hán, không phải bản dịch nghĩa của từ. Ví dụ: 公園 = Công – Viên; 設計 = Thiết – Kế.<br>
     </div>
     <div class="form-actions">
       <button class="primary" onclick="saveWord()">保存 / Lưu từ</button>
@@ -132,5 +189,6 @@ ruby rt{font-size:.55em;color:#69727d}
 </div>
 </div>
 <script src="app.js"></script>
+<script src="learning.js"></script>
 </body>
 </html>

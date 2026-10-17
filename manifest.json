@@ -1,9 +1,9 @@
 {
-  "name":"Healthcare Japanese Flashcards",
-  "short_name":"Healthcare Japanese",
-  "start_url":".",
-  "display":"standalone",
-  "background_color":"#f4f6f8",
-  "theme_color":"#18202a",
-  "icons":[]
+  "name": "Healthcare Japanese V12",
+  "short_name": "Japanese V12",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f4f6f8",
+  "theme_color": "#18202a",
+  "icons": []
 }
