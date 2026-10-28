@@ -1,21 +1,34 @@
-V12 REVISED IMPORT AUDIT
+V14 REVIEW / QA REPORT
 
-Base V11 entries: 877
-New unique entries added in this review: 1133
-Final unique headwords: 2010
+Baseline: Healthcare Japanese Flashcards V13
+Data source retained: 2,264 unique Japanese headwords
+Workbook source: 専門用語.xlsx (Sheet1, Sheet2, 国際分類, E-mail)
 
-PDFs reviewed using extracted text (10 files):
-- Thiết kế_full.txt: 121 candidate rows detected; 94 new rows imported by table parser.
-- Thành ngữ_full.txt: 50 candidate rows detected; 48 new rows imported by table parser.
-- Lời chúc,động viên_full.txt: 177 candidate rows detected; 150 new rows imported by table parser.
-- Khám sức khoẻ_full.txt: 216 candidate rows detected; 169 new rows imported by table parser.
-- 適性検査_full.txt: 0 candidate rows detected; 0 new rows imported by table parser.
-- Tiếng Nhật chuyên ngành2_full.txt: 1 candidate rows detected; 1 new rows imported by table parser.
-- 📑 Chủ đề 1- Các bộ phận trên cơ thể – Slide 2 (21–47)_full.txt: 438 candidate rows detected; 379 new rows imported by table parser.
-- Ngữ pháp_full.txt: 347 candidate rows detected; 134 new rows imported by table parser.
-- Từ đồng nghĩa_full.txt: 86 candidate rows detected; 35 new rows imported by table parser.
-- Tiếng Nhật chuyên ngành_full.txt: 155 candidate rows detected; 77 new rows imported by table parser.
+Automated full-dataset checks
+- Japanese headword duplicates: 0
+- Missing Japanese headwords: 0
+- Missing kana readings: 0
+- Missing English meanings: 0
+- Missing Vietnamese meanings: 0
+- Unmapped Kanji characters in the character-level Hán-Việt table: 0
+- Unknown Hán-Việt placeholders rendered as question marks: 0
+- Added character-level Hán-Việt mappings for previously unmapped Kanji.
+- Preserved email templates and app files/features from V13.
+- Excluded code-only identifiers as previously requested; no standalone 510(k) card added.
 
-Manually reviewed source-derived additions included: 46.
-Deduplication: normalized exact Japanese headword against V11 and within the imported set.
-Important limitations: OCR/PDF text extraction can split tables and layouts; only rows with a readable Japanese headword, kana reading, English meaning and Vietnamese meaning were auto-imported. Curated manual entries were added only where the source terms were visible and meanings/readings were reliable. Long sentences, test statements and example sentences were not blindly added as vocabulary cards. See README for scope.
+Focused terminology review
+- Reviewed the medical-device classification vocabulary and aligned Class I-IV risk descriptions with PMDA's English guidance and Japanese class definitions.
+- Corrected the kana reading for クラスⅢ to くらすさん.
+- Refined 鋼製小物 to “Steel surgical instruments” / “Dụng cụ phẫu thuật bằng thép”; “stainless steel” was too specific for the source wording.
+- Refined 体外診断用機器 to “In vitro diagnostic medical devices” / “Thiết bị y tế chẩn đoán in vitro”.
+
+Reference consulted for classification terminology:
+PMDA, Regulations and Approval/Certification of Medical Devices:
+https://www.pmda.go.jp/english/review-services/reviews/0004.html
+PMDA Japanese medical device overview:
+https://www.pmda.go.jp/review-services/drug-reviews/about-reviews/devices/0028.html
+
+Important scope note
+- The complete dataset was checked automatically for missing fields, duplicate headwords, and Hán-Việt character-map coverage.
+- The medical-device classification subset received focused terminology review against the references above.
+- This is not a claim that every one of the 2,264 English/Japanese/Vietnamese translations has been independently certified by a specialist or externally checked one by one. Context-sensitive Hán-Việt readings can differ by word; the app displays character-level readings as a learning aid, not as a full Sino-Vietnamese dictionary entry for each compound.

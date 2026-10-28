@@ -1,17 +1,21 @@
-Healthcare & Engineering Japanese Flashcards — V12
+Healthcare & Engineering Japanese Flashcards — V14
 
 Files: index.html, app.js, learning.js, manifest.json.
 
-V12 changes
-- Preserves V11 quiz, dictionary, custom vocabulary and email templates.
-- Adds a dedicated telephone & dialogue tab. Dialogues are English + Japanese only, as requested, with copy buttons per line or whole dialogue.
-- Scenarios: incoming calls, spelling/clarifying names, holding/transferring calls, taking messages, introducing End Shower, explaining use/benefits, technical issue handling, confirming requirements, quotations/delivery, and online meeting scheduling.
-- Adds a new vocabulary set cross-checked against V11 headwords, drawing from the uploaded PDFs on health checks, aptitude-test terms, medical devices, mechanical design, body parts, kitchen items, idioms and N2 grammar.
-- Existing quiz modes and 5-random-word rounds remain.
+V14 review update
+- Retains the 2,264 Japanese headwords and the V13 vocabulary merge from 専門用語.xlsx Sheet1 and 国際分類.
+- Performs full-dataset automated checks for duplicate Japanese headwords and missing Japanese, kana, English, or Vietnamese fields.
+- Expands the character-level Hán-Việt mapping so all Kanji characters present in Japanese headwords are covered by the mapping; avoids question-mark placeholders for unmapped characters.
+- Reviews key medical-device classification terms against PMDA guidance, corrects クラスⅢ reading to くらすさん, and refines translations for 鋼製小物 and 体外診断用機器.
+- Excludes code-only/numeric identifiers such as 510(k), as requested.
+- Preserves V13/V12 email templates and application features.
+
+Existing features retained
+- Vocabulary quiz, dictionary, custom vocabulary, telephone/dialogue tab and email templates.
+- English/Japanese dialogue content and copy buttons remain available.
 
 Deployment: replace index.html, app.js, learning.js and manifest.json in your GitHub Pages repository.
 
-Note: Japanese readings and translations for new terms were reviewed as a curated learning list. For source documents that contain large phrase lists or grammar explanations, not every full sentence/pattern is converted into a standalone flashcard.
-
-
-Revised source review: all 10 user-uploaded PDFs were text-extracted and checked. IMPORT_AUDIT.txt gives per-file extraction/import counts. Imported table rows require a Japanese headword, kana reading, English and Vietnamese meaning; terms already present in V11 are skipped. This avoids falsely claiming every line or full sentence is a vocabulary card.
+Quality note
+- Automated completeness and duplicate checks cover the full 2,264-entry dataset.
+- The medical-device classification subset received focused terminology review. Not every translation in the entire dataset has been independently certified or externally verified one by one; see IMPORT_AUDIT.txt for the exact scope and reference links.
