@@ -120,6 +120,7 @@ ruby rt{font-size:.55em;color:#69727d}
   <div class="section-tabs" role="tablist">
     <button class="primary" id="tabDictionary" onclick="showLearningTab('dictionary')">🔎 Tra từ điển</button>
     <button id="tabPhrases" onclick="showLearningTab('phrases')">💬 Mẫu câu tiếng Anh</button>
+    <button id="tabGrammar" onclick="showLearningTab('grammar')">📘 Ngữ pháp & cụm từ</button>
     <button id="tabEmails" onclick="showLearningTab('emails')">✉️ Mẫu email</button>
     <button id="tabCalls" onclick="showLearningTab('calls')">☎️ Gọi điện & hội thoại</button>
   </div>
@@ -135,6 +136,20 @@ ruby rt{font-size:.55em;color:#69727d}
     <p class="small">Có câu tiếng Anh, bản dịch tiếng Việt và cách diễn đạt tiếng Nhật tham khảo.</p>
     <select id="phraseCategory"><option value="all">Tất cả chủ đề</option><option value="greetings">Chào hỏi & làm quen</option><option value="daily">Thói quen hằng ngày</option><option value="hobbies">Sở thích cá nhân</option><option value="work">Công việc & kinh nghiệm</option></select>
     <div id="phraseResults" class="phrase-list"></div>
+  </section>
+  <section id="grammarSection" class="learn-section" hidden>
+    <h2>Ngữ pháp, giới từ & cụm từ giao tiếp</h2>
+    <p class="small">Giải thích bằng tiếng Việt, ví dụ thực tế và cách dùng trong công việc. Chọn nhóm để ôn tập.</p>
+    <select id="grammarCategory">
+      <option value="all">Tất cả nội dung</option>
+      <option value="prepositions">In / On / At / For / Of và giới từ</option>
+      <option value="time">Thời gian & lịch trình</option>
+      <option value="expressions">Cụm từ giao tiếp</option>
+      <option value="agreement">Đồng ý, xác nhận & nhấn mạnh</option>
+      <option value="connectors">Liên kết ý & diễn đạt</option>
+      <option value="email">Email & điện thoại</option>
+    </select>
+    <div id="grammarResults" class="phrase-list"></div>
   </section>
   <section id="callsSection" class="learn-section" hidden>
     <h2>Gọi điện & hội thoại thực tế</h2>
